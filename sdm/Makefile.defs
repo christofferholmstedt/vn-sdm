@@ -1,0 +1,61 @@
+# -*- Makefile -*-
+# Common definitions shared by all Makefiles in the SDM tree.
+# These definitions are collected here for easy modification.
+
+# The C and C++ compilers to use.
+# If a cross compiler is being used, set the environment variable CROSS_COMPILE (using export) to the path
+#CROSS_COMPILE=/opt/gumstix/build_arm_nofpu/staging_dir/bin/arm-linux-uclibcgnueabi-
+CC=$(CROSS_COMPILE)gcc
+CXX=$(CROSS_COMPILE)g++
+AR=$(CROSS_COMPILE)ar
+
+# Architecture-specific compiler flags
+#ARCHFLAGS=-m32 -march=i686
+ARCHFLAGS=
+#ARCHFLAGS=-DWSSP_BUILD
+#ARCHFLAGS=-Os -march=armv5te -mtune=xscale -Wa,-mcpu=xscale
+
+# Warning flags for both the C and C++ compilers
+WARNFLAGS=-Wall -W -Wno-unused-parameter
+
+# Warning flags for the C++ compiler only
+CXXWARNFLAGS=-Weffc++
+
+# Optimization flags
+OPTFLAGS=
+
+# Debug flags
+DEBUGFLAGS=-g
+
+# The lexer to invoke and flags to pass to it
+LEX=flex
+LEXFLAGS=-B
+
+# The parser generator to invoke and flags to pass to it
+YACC=bison
+YACCFLAGS=-vkdt
+
+# Build to log all SDM message traffic, uncomment the below variable to log SDM messages
+#MESSAGELOGGINGFLAGS=-DBUILD_WITH_MESSAGE_LOGGING
+
+# Uncomment and add the below variable to the build definitions to remove debug statements
+#DEBUGREMOVALFLAGS=-DREMOVE_DEBUG_OUTPUT
+
+# Uncomment to allow backup Data Managers and backup Task Managers for increased fault tolerance
+#DMBACKUPFLAGS=-DPNP_BACKUP
+
+# Uncomment to allow backup Data Managers for increased fault tolerance using a fake NM
+#DMFAKEBACKUPFLAGS=-DPNP_FAKE
+
+# Uncomment to build the Data Manager for xTEDS merging
+#DMMERGEFLAGS=-DBUILD_FOR_XTEDS_MERGING
+
+# Uncomment to use spacewire
+#DSPACEWIREFLAGS=-DBUILD_FOR_SPACEWIRE
+
+# Do not change these definitions
+CFLAGS=$(ARCHFLAGS) $(WARNFLAGS) $(OPTFLAGS) $(DEBUGFLAGS)
+CXXFLAGS=$(CFLAGS) $(CXXWARNFLAGS)
+
+
+

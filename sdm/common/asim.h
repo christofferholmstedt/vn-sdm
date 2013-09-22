@@ -1,0 +1,28 @@
+#ifndef __ASIM_H_
+#define __ASIM_H_
+
+#define		ASIM_ANALOG_SOURCE	0x0001
+#define 	ASIM_THERMOCOUPLE	0x0002
+#define		ASIM_VGI_AMP		0x0003
+#define		ASIM_DIGITAL_IO		0x0004
+
+#define		ASIM_PRODUCT_ID		0xC001
+#define		ASIM_TIMEOUT_SEC	0xC002
+#define		ASIM_ROBUSTHUB_CMD	0xC003
+#define		ASIM_PATH		0xC004
+
+#define		VGI_AMP_STAGE_TWO_GAIN	0x01
+#define		VGI_AMP_STAGE_ONE_GAIN	0x02
+#define		VGI_AMP_OFFSET		0x03
+
+#define		ANALOG_SOURCE_DAC_OUT	0x01
+
+#define		DIGITAL_IO_PROGRAM	0x01
+#define		DIGITAL_IO_IO		0x02
+
+#define		ASIM_WRITE_FLASH	0xFA
+#define		ASIM_ERASE_FLASH	0xFB
+#define		ASIM_READW_FLASH	0xFC
+#define		ASIM_READB_FLASH	0xFD
+
+#endif

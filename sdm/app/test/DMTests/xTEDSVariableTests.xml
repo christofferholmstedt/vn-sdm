@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xTEDS xmlns="http://www.interfacecontrol.com/SPA/xTEDS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.interfacecontrol.com/SPA/xTEDS ../Schema/xTEDS02.xsd" name="DNet_CoarseSSAssy_xTEDS"
+       version="2.1">
+
+  <Device name="xTEDSVariableTests" kind="cssa" description="An assembly of 4 coarse sun sensors" />
+
+  <Interface id="1" name="CSSAssemblyInterface" description="Aggregate-level interface for the assembly" >
+	<Orientation axis="X" angle="45" units="degrees"/>
+      	<Orientation axis="Y" angle="45" units="degrees"/>
+     	 <Orientation axis="Z" angle="0" units="degrees"/>
+      <Location x="5" y="5" z="-1" units="cm"/>
+    <Variable kind="Time" name="Test1" invalidValue="123" format="UINT32" units="Seconds" />
+    <Variable kind="SubS" name="Test2" units="Counts" format="UINT32" scaleFactor=".00000002083" scaleUnits="Seconds" />
+    
+    <!--Drange tests-->
+    <Variable name="Test3" kind="boolean" format="UINT08">
+      <Drange name="SolutionEnum" >
+	      <Option name="Yes" value="1"/> 
+      </Drange>
+    </Variable>
+    <Variable name="Test4" kind="boolean" invalidValue="word" format="UINT08">
+      <Drange name="SolutionEnum" >
+	      <Option name="Test1" value="1d"/> 
+	      <Option name="Test2" value="177"/>
+	      <Option name="Test3" value="156"/>
+	      <Option name="Test4" value="12"/>
+	      <Option name="Test5" value="1fe"/>
+      </Drange>
+    </Variable>
+    <Variable name="Test5" kind="boolean" format="UINT08">
+      <Drange name="SolutionEnum" >
+	      <Option name="Yes" value="1"/> 
+	      <Option name="No" value="0"/>
+      </Drange>
+    </Variable>
+    
+    <Variable name="Test6" kind="DataQuality" format="UINT08" rangeMin="-100.0" rangeMax="100.0" yHigh="1.0" yLow="0.0" rHigh="20.0" rLow="10.0" precision="2" accuracy=".0001">
+	<Qualifier name="hello" value="3" />
+	<Qualifier name="TestQual" value="45"/>
+	<Qualifier name="TestQual2" value="55" units="FakeUnits"/>
+      <Drange name="DataQualityEnum" description="None">
+	      <Option name="dataBad" value="0" description="data is garbage or NaN." alarm="1"/>
+	      <Option name="dataPoor" value="1"/>
+	      <Option name="dataGood" value="2" description="data is good." />
+      </Drange>
+      <Location x="5" y="5" z="-1" units="cm"/>
+      <Orientation axis="X" angle="45" units="degrees"/>
+      <Orientation axis="Y" angle="45" units="degrees"/>
+    </Variable>
+    <!-- Curve tests -->
+    <Variable name="Test7" kind="SunCos" format="FLOAT32">
+	<Qualifier name="TestQual" value="45"/>
+	<Qualifier name="TestQual2" value="55" units="FakeUnits"/>
+	<Curve name="testCurve" description="Used for testing.">
+		<Coef exponent="1.0" value="1.0"/>
+		<Coef exponent="3.0" value="3.0"></Coef>
+	</Curve>
+      <Location x="5" y="5" z="-1" units="cm"/>
+      <Orientation axis="X" angle="45" units="degrees"/>
+      <Orientation axis="Y" angle="45" units="degrees"/>
+      <Orientation axis="Z" angle="0" units="degrees"/>
+    </Variable>
+        <!-- Curve tests -->
+    <Variable name="Test8" kind="SunCos" format="FLOAT32">
+	<Qualifier name="TestQual" value="45"/>
+	<Qualifier name="TestQual2" value="55" units="FakeUnits"/>
+	<Curve name="testCurve" description="Used for testing.">
+		<Coef exponent="1.0" value="14.0"/>
+		<Coef exponent="3.0" value="3.0"></Coef>
+		<Coef exponent="16.0" value="155.0"/>
+		<Coef exponent="14.0" value="143.0"/>
+		<Coef exponent="13.0" value="1662.0"/>
+		<Coef exponent="12.0" value="11.0"/>
+	</Curve>
+      <Location x="5" y="5" z="-1" units="cm"/>
+      <Orientation axis="Y" angle="45" units="degrees"/>
+      <Orientation axis="Z" angle="0" units="degrees"/>
+    </Variable>
+    
+    
+    <Variable name="Test9" kind="SunCos" format="FLOAT32">
+	<Qualifier name="TestQual" value="45"/>
+	<Qualifier name="TestQual2" value="55" units="FakeUnits"/>
+      <Location x="5" y="0" z="-1" units="cm"/>
+      <Orientation axis="X" angle="-45" units="degrees"/>
+      <Orientation axis="Y" angle="45" units="degrees"/>
+      <Orientation axis="Z" angle="0" units="degrees"/>
+    </Variable>
+    <Variable name="Test10" kind="SunCos" format="FLOAT32">
+      <Location x="0" y="5" z="-1" units="cm"/>
+      <Orientation axis="X" angle="45" units="degrees"/>
+      <Orientation axis="Z" angle="0" units="degrees"/>
+    </Variable>
+    <Variable name="Test11" kind="SunCos" format="FLOAT32">
+      <Location x="5" y="5" z="1" units="cm"/>
+      <Orientation axis="X" angle="45" units="degrees"/>
+      <Orientation axis="Y" angle="45" units="degrees"/>
+      <Orientation axis="Z" angle="-90" units="degrees"/>
+    </Variable>
+    <Variable name="Test12" kind="sunLOS" format="FLOAT32" length="2" />
+
+   
+  </Interface>
+</xTEDS>

@@ -1,0 +1,19 @@
+SDM/app/test folder
+
+This folder and its subfolders contain ongoing test applications for the SDM system.
+Documentation about these tests is mostly non-existent.  This folder will be provided
+with releases for those who may be interested.
+
+The SDM/app/test/ folder contains generic tests for the SDM system.
+
+The SDM/app/test/ClassTests/ folder contains tests for SDM classes.
+
+The SDM/app/test/DMTests/ folder contains tests specific to the Data Manager.
+
+
+
+Most of these applications should be started similarly to how the Process Manager would
+start-up applications.  That is, with the same command-line string.
+	$ ./APPNAME TM-Address DM-Address SDM-PID
+For example:
+	$ ./SearchTest 127.0.0.1 127.0.0.1 56

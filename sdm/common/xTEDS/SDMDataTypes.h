@@ -1,0 +1,18 @@
+#ifndef __SDM_DATA_TYPES_H_
+#define __SDM_DATA_TYPES_H_
+
+
+
+enum SDMDataTypes
+{
+	SDM_UINT08,
+	SDM_INT08,
+	SDM_UINT16,
+	SDM_INT16,
+	SDM_UINT32,
+	SDM_INT32,
+	SDM_FLOAT32,
+	SDM_FLOAT64
+};
+
+#endif

@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<xTEDS xmlns="http://www.interfacecontrol.com/SPA/xTEDS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.interfacecontrol.com/SPA/xTEDS xTEDS02.xsd" name="FullGPSxTEDS"
+	version="2.0">
+	<Device name="FullGPSReceiver" kind="sgr" description="A GPS receiver that calculates position, velocity, and time internally" />
+	
+  <Interface name="GPSInterface" id="1">
+    <Qualifier name="headID" value="0"/>
+		<Variable name="numVisibleSats" kind="listSize" format="INT16" description="Number of GPS satelites visible in this observation" />
+		<Variable name="recvTime" kind="time" format="INT32" units="s" description="Receiver clock time since GPS epoch">
+			<Qualifier name="timeFrame" value="GPST1" />
+		</Variable>
+		<Variable name="PRNs" kind="ID" format="INT16" length="28" description="list of PRN numbers of the visible GPS satelites">
+			<Qualifier name="representation" value="array" />
+		</Variable>
+		<Variable name="PRN" kind="ID" format="INT16" description="PRN of a single GPS sat generating a NAV message" />
+		<Variable name="Prange" kind="distance" format="FLOAT32" length="28" units="km" description="Pseudorange measurements for each visible GPS satelite">
+			<Qualifier name="representation" value="array" />
+		</Variable>
+		<Variable name="epochTime" kind="epoch" format="INT16" length="6" description="YMDHMS definition of the current GPS epoch time">
+			<Qualifier name="representation" value="array" />
+		</Variable>
+		<Variable name="nav" kind="navMessage" format="FLOAT32" length="28" description="Nav message from this satelite: ephemeris, clock corrections">
+			<Qualifier name="representation" value="array" />
+		</Variable>
+		<Variable name="gpst" kind="time" format="INT32" units="s" description="Current calculated GPS time (UTC)">
+			<Qualifier name="timeFrame" value="UTC" />
+		</Variable>
+		<Variable name="R" kind="distance" format="FLOAT32" units="km" length="3" description="Current position of the receiver in ECEF">
+			<Qualifier name="representation" value="vector" />
+			<Qualifier name="frameMeasured" value="ITRF" />
+			<Qualifier name="frameResolved" value="ITRF" />
+		</Variable>
+		<Variable name="V" kind="velocity" format="FLOAT32" units="km_s" length="3" description="Current velocity vector of the receiver in ECEF">
+			<Qualifier name="representation" value="vector" />
+			<Qualifier name="frameMeasured" value="ITRF" />
+			<Qualifier name="frameResolved" value="ITRF" />
+		</Variable>
+    <Variable kind="Time" name="Time" format="UINT32" units="Seconds" />
+    <Variable kind="SubSeconds" name="SubS" units="Counts" format="UINT32" scaleFactor=".0001" scaleUnits="Seconds" />
+		<Notification>
+			<DataMsg name="GPSSatPrange" msgArrival="PERIODIC" msgRate="1" id="1">
+        <Qualifier name="telemetryLevel" value="1"/>
+				<VariableRef name="numVisibleSats" />
+				<VariableRef name="recvTime" />
+				<VariableRef name="PRNs" />
+				<VariableRef name="Prange" />
+			</DataMsg>
+		</Notification>
+		<Notification>
+			<DataMsg name="GPSNavMessage" msgArrival="PERIODIC" msgRate="1" id="2">
+				<VariableRef name="PRN" />
+				<VariableRef name="epochTime" />
+				<VariableRef name="nav" />
+			</DataMsg>
+		</Notification>
+		<Notification>
+			<DataMsg name="SCPosition" msgArrival="PERIODIC" msgRate="1" id="3">
+        <Qualifier name="telemetryLevel" value="1"/>
+        <VariableRef name="Time"/>
+        <VariableRef name="SubS"/>
+				<VariableRef name="gpst" />
+				<VariableRef name="R" />
+			</DataMsg>
+		</Notification>
+		<Notification>
+			<DataMsg name="SCVelocity" msgArrival="PERIODIC" msgRate="1" id="4">
+        <Qualifier name="telemetryLevel" value="1"/>
+        <VariableRef name="Time"/>
+        <VariableRef name="SubS"/>
+				<VariableRef name="gpst" />
+				<VariableRef name="V" />
+			</DataMsg>
+		</Notification>
+		<Notification>
+			<DataMsg name="GPSTime" msgArrival="PERIODIC" msgRate="1" id="5">
+        <Qualifier name="telemetryLevel" value="1"/>
+				<VariableRef name="gpst" />
+			</DataMsg>
+		</Notification>
+	</Interface>
+  
+  <Interface name="DevPwr" id="2">
+    <Qualifier name="CurrentLoKeepout" value="0.0" units="A"/>
+    <Qualifier name="CurrentLoWarning" value="0.0" units="A"/>
+    <Qualifier name="CurrentHiWarning" value="3.5" units="A"/>
+    <Qualifier name="CurrentHiKeepout" value="3.5" units="A"/>
+    <Variable kind="Time" name="Time" format="UINT32" units="Seconds" />
+    <Variable kind="SubSeconds" name="SubS" units="Counts" format="UINT32" scaleFactor=".0001" scaleUnits="Seconds" />
+    <Variable name="DevPwrState" kind="Power_State" format="UINT08">
+      <Drange name="DevPwrStateEnum">
+        <Option name="DevPwrOFF" value="0" description="All power to device is turned off." />
+        <Option name="DevPwrON" value="1" description="Device may draw full power." />
+      </Drange>
+    </Variable>
+    <Variable name="DevPwrStateSet" kind="Power_State" format="UINT08" id="2">
+      <Drange name="DevPwrStateEnumReference" description="This should be a reference to DevPwrStateEnumeration.">
+        <Option name="DevPwrOFF" value="0" description="All power to device is turned off." />
+        <Option name="DevPwrON" value="1" description="Device may draw full power." />
+      </Drange>
+    </Variable>
+    <Variable name="modePowers" kind="power" format="FLOAT32" units="W" length="2" />
+    <Command>
+      <CommandMsg name="DevPwrSetState" id="1">
+        <VariableRef name="DevPwrStateSet" />
+      </CommandMsg>
+      <FaultMsg name="DevPwrStateNotSet" id="2">
+        <VariableRef name="Time" />
+        <VariableRef name="SubS" />
+        <VariableRef name="DevPwrState" />
+        <VariableRef name="DevPwrStateSet" />
+      </FaultMsg>
+    </Command>
+    <Notification>
+      <DataMsg name="DevPwrHK" id="3" msgArrival="PERIODIC">
+        <Qualifier name="telemetryLevel" value="1"/>
+        <VariableRef name="Time" />
+        <VariableRef name="SubS" />
+        <VariableRef name="DevPwrState" />
+        <VariableRef name="DevPwrStateSet" />
+      </DataMsg>
+    </Notification>
+    <Request>
+      <CommandMsg name="getPowerInMode" id="4" />
+      <DataReplyMsg name="powerInMode" id="5">
+        <VariableRef name="modePowers"/>
+      </DataReplyMsg>
+    </Request>
+  </Interface>
+
+  <Interface name="CmpSOH" id="3">
+    <Qualifier name="TemperatureLoKeepout" value="-20.0" units="degC"/>
+    <Qualifier name="TemperatureLoWarning" value="-10.0" units="degC"/>
+    <Qualifier name="TemperatureHiWarning" value="50.0" units="degC"/>
+    <Qualifier name="TemperatureHiKeepout" value="60.0" units="degC"/>
+    <Variable kind="Time" name="Time" format="UINT32" units="Seconds" />
+    <Variable kind="SubSeconds" name="SubS" units="Counts" format="UINT32" scaleFactor=".0001" scaleUnits="Seconds" />
+    <Variable name="DeviceTemperature" kind="temperature" format="FLOAT32" units="degC" />
+    <Request>
+      <CommandMsg name="GetDeviceTemperature" id="1" />
+      <DataReplyMsg name="DeviceTempReply" id="2">
+        <VariableRef name="Time" />
+        <VariableRef name="SubS" />
+        <VariableRef name="DeviceTemperature"/>
+      </DataReplyMsg>
+    </Request>
+    <Notification>
+      <DataMsg name="DeviceTemp" id="3" msgArrival="PERIODIC" msgRate="1">
+        <Qualifier name="telemetryLevel" value="1"/>
+        <VariableRef name="Time" />
+        <VariableRef name="SubS" />
+        <VariableRef name="DeviceTemperature"/>
+      </DataMsg>
+    </Notification>
+  </Interface>
+</xTEDS>

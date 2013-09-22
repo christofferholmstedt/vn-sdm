@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xTEDS xmlns="http://www.interfacecontrol.com/SPA/xTEDS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.interfacecontrol.com/SPA/xTEDS ../Schema/xTEDS02.xsd" name="SolarArray_XTEDS"
+	version="2.0">
+  <Device name="SolarArray" kind="sa" description="a device that provides electrical power" >
+    <Qualifier name="Manufacturer" value="MsiFitsAray"/>
+    <Qualifier name="Model" value="1.2.3"/>
+    <Qualifier name="SerialNumber" value="90210"/>
+  </Device>
+  
+	<Interface name="SolarArrayInterface" id="1">
+		<Qualifier name="CellType" value="GaAs"/>
+		<Qualifier name="BOLPower" value="80" units="W"/>
+		<Qualifier name="PerformanceDegradation" value="5" units="percent_year"/>
+		<Qualifier name="MaxPowerVoltage" value="20" units="Volts"/>
+		<Qualifier name="MaxPowerCurrent" value="10" units="Amps"/>
+		<Variable kind="Time" name="Time" format="UINT32" units="Seconds" />
+		<Variable kind="SubSeconds" name="SubS" units="Counts" format="UINT32" scaleFactor=".0001" scaleUnits="Seconds" />
+		<Variable name="SATemp" kind="Temperature" format="FLOAT32" units="degC" description="ambient temperature of array" />
+		<Variable name="SACurrent" kind="Current" format="FLOAT32" units="Amps" description="charging is positive; discharging is negative" />
+		<Variable name="SADesiredCurrent" kind="SetCurrent" format="FLOAT32" units="Amps" description="charging is positive; discharging is negative" />
+		<Variable name="SAUnregVoltage" kind="Voltage" format="FLOAT32" units="Volts" description="voltage at battery terminals" />
+		<Variable name="SAOperationState" kind="mode" format="UINT08">
+			<Drange name="OpStateEnum">
+				<Option name="Offline" value="0"/>
+				<Option name="Online" value="1"/>
+			</Drange>
+		</Variable>
+
+		<Command>
+			<CommandMsg id="1" name="SetOpState">
+				<VariableRef name="SAOperationState"/>
+			</CommandMsg>
+		</Command>
+		
+		<Command>
+			<CommandMsg id="2" name="SetCurrentLimitOut">
+				<VariableRef name="SADesiredCurrent"/>
+			</CommandMsg>
+		</Command>
+		
+		 <Notification>
+			<DataMsg name="ArraySOH" description="state of health" id="3" msgArrival="PERIODIC">
+				<Qualifier name="telemetryLevel" value="1"/>
+				<Qualifier name="Type" value="SOH" />
+				<VariableRef name="Time" />
+				<VariableRef name="SubS" />
+				<VariableRef name="SATemp" />
+				<VariableRef name="SACurrent" />
+				<VariableRef name="SADesiredCurrent"/>
+				<VariableRef name="SAUnregVoltage" />
+				<VariableRef name="SAOperationState" />
+			</DataMsg>
+		</Notification>
+		
+	</Interface>
+
+	<Interface id="2" name="DeployerInterface">
+		<!--description="Interface for a deployment mechanism - in this case the release for the array."-->
+		<Variable kind="Time" name="Time" format="UINT32" units="Seconds" />
+		<Variable kind="SubSeconds" name="SubS" units="Counts" format="UINT32" scaleFactor=".0001" scaleUnits="Seconds" />
+		<Variable kind="mode" name="ArmedState" format="UINT08">
+			<Drange name="ArmedStateEnum">
+				<Option name="Safe" value="0"/>
+				<Option name="Armed" value="1"/>
+			</Drange>
+		</Variable>
+		<Variable kind="mode" name="DeployedState" format="UINT08">
+			<Drange name="DeployedStateEnum">
+				<Option name="Stowed" value="0"/>
+				<Option name="Deploying" value="1"/>
+				<Option name="Deployed" value="2"/>
+			</Drange>
+		</Variable>
+		<Command>
+			<CommandMsg id="1" name="ArmOrDisarmRelease" description="Toggles the safe/armed state of the deployment mechanism">
+				<VariableRef name="ArmedState"/>
+			</CommandMsg>
+		</Command>
+		<Command>
+			<CommandMsg id="2" name="DeployGo" description="Deploy the array"/>
+		</Command>
+		<Request>
+			<CommandMsg id="3" name="GetDeployState" />
+			<DataReplyMsg id="4" name="DeployState">
+				<VariableRef name="Time"/>
+				<VariableRef name="SubS"/>
+				<VariableRef name="ArmedState"/>
+				<VariableRef name="DeployedState"/>
+			</DataReplyMsg>
+		</Request>
+	</Interface>
+
+	<Interface name="CmpSafety" id="3">
+		<Qualifier name="TemperatureLoKeepout" value="-20.0" units="degC"/>
+		<Qualifier name="TemperatureLoWarning" value="-10.0" units="degC"/>
+		<Qualifier name="TemperatureHiWarning" value="50.0" units="degC"/>
+		<Qualifier name="TemperatureHiKeepout" value="60.0" units="degC"/>
+		<Variable kind="Time" name="Time" format="UINT32" units="Seconds" />
+		<Variable kind="SubSeconds" name="SubS" units="Counts" format="UINT32" scaleFactor=".0001" scaleUnits="Seconds" />
+		<Variable name="DeviceTemperature" kind="temperature" format="FLOAT32" units="degC" />
+		<Request>
+			<CommandMsg name="GetDeviceTemperature" id="1" />
+			<DataReplyMsg name="DeviceTempReply" id="2">
+				<VariableRef name="Time" />
+				<VariableRef name="SubS" />
+				<VariableRef name="DeviceTemperature"/>
+			</DataReplyMsg>
+		</Request>
+		<Notification>
+			<DataMsg name="DeviceTemp" id="3" msgArrival="PERIODIC" msgRate="1">
+				<Qualifier name="telemetryLevel" value="1"/>
+				<VariableRef name="Time" />
+				<VariableRef name="SubS" />
+				<VariableRef name="DeviceTemperature"/>
+			</DataMsg>
+		</Notification>
+	</Interface>
+</xTEDS>

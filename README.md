@@ -22,6 +22,9 @@ The SDM software was developed as a middleware to explore plug-and-play
 concepts and to develop a better understanding of how to make join 
 and discovery mechanisms operate in embedded systems.
 
+The Virtual Network Protocol - SDM derivates begins with the 
+released SDM version 1.10.3a.
+
 Project source and information is on GitHub
 http://virtual-network.github.io/vn-sdm
 

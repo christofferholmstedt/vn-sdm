@@ -1,0 +1,167 @@
+#ifndef _TELEMETRYHANDLER_XTEDS_H
+#define _TELEMETRYHANDLER_XTEDS_H
+
+#define _STRING_TELEMETRYHANDLER_XTEDS \
+"<?xml version=\"1.0\" encoding=\"UTF-8\"?>" \
+"<xTEDS xmlns=\"http://www.interfacecontrol.com/SPA/xTEDS\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" \
+"xsi:schemaLocation=\"http://www.interfacecontrol.com/SPA/xTEDS ../Schema/xTEDS02.xsd\" name=\"TelemetryHandlerXTEDS\" description=\"TelemetryHandler xTEDS\" version=\"1.0\">" \
+"" \
+"<Application name=\"TelemetryHandler\" kind=\"CommunicationsFlightSoftware\" description=\"Communications Subsystem Telemetry Handler\"/>" \
+"" \
+"<Interface name=\"TelemetryHandlerInterface\" id=\"1\" description=\"Basic Telemetry Manager interface\">" \
+"" \
+"<Variable name=\"ComponentSensorID\"       kind=\"tbd\"                             format=\"UINT32\"/>" \
+"<Variable name=\"MsgID\"                   kind=\"tbd\" rangeMin=\"1\" rangeMax=\"255\" format=\"UINT08\"/>" \
+"<Variable name=\"InterfaceID\"             kind=\"tbd\" rangeMin=\"0\" rangeMax=\"255\" format=\"UINT08\"/>" \
+"<Variable name=\"ComponentTelemetryLevel\" kind=\"tbd\" rangeMin=\"0\" rangeMax=\"4\"   format=\"UINT08\"/>" \
+"<Variable name=\"MsgTelemetryLevel\"       kind=\"tbd\" rangeMin=\"1\" rangeMax=\"3\"   format=\"UINT08\"/>" \
+"<Variable name=\"SendX\"                   kind=\"tbd\"                             format=\"UINT08\"/>" \
+"<Variable name=\"OfY\"                     kind=\"tbd\"                             format=\"UINT08\"/>" \
+"" \
+"<Command>" \
+"<CommandMsg name=\"RestoreMsgTlmLevel\" id=\"002\" description=\"Restore the telemetry level of the message to default level\">" \
+"<VariableRef name=\"ComponentSensorID\"/>" \
+"<VariableRef name=\"MsgID\"/>" \
+"<VariableRef name=\"InterfaceID\"/>" \
+"</CommandMsg>" \
+"</Command>" \
+"" \
+"<Command>" \
+"<CommandMsg name=\"SetComponentTlmLevel\" id=\"003\" description=\"Set the telemetry level of this component\">" \
+"<VariableRef name=\"ComponentSensorID\"/>" \
+"<VariableRef name=\"ComponentTelemetryLevel\"/>" \
+"</CommandMsg>" \
+"</Command>" \
+"" \
+"<Command>" \
+"<CommandMsg name=\"SetComponentTlmLevelToDefault\" id=\"004\" description=\"Set the telemetry level of this component to default\">" \
+"<VariableRef name=\"ComponentSensorID\"/>" \
+"</CommandMsg>" \
+"</Command>" \
+"" \
+"<Command>" \
+"<CommandMsg name=\"SetDefaultTlmLevel\" id=\"005\" description=\"Set the overall telemetry level of the SYSTEM\">" \
+"<VariableRef name=\"ComponentTelemetryLevel\"/>" \
+"</CommandMsg>" \
+"</Command>" \
+"" \
+"<Command>" \
+"<CommandMsg name=\"SetMsgTlmLevel\" id=\"006\" description=\"Set the telemetry level of the message\">" \
+"<VariableRef name=\"ComponentSensorID\"/>" \
+"<VariableRef name=\"MsgID\"/>" \
+"<VariableRef name=\"InterfaceID\"/>" \
+"<VariableRef name=\"MsgTelemetryLevel\"/>" \
+"</CommandMsg>" \
+"</Command>" \
+"" \
+"<Command>" \
+"<CommandMsg name=\"SetMsgDownlinkRate\" id=\"007\" description=\"Set the rate at which this message will be downlinked\">" \
+"<VariableRef name=\"ComponentSensorID\"/>" \
+"<VariableRef name=\"MsgID\"/>" \
+"<VariableRef name=\"InterfaceID\"/>" \
+"<VariableRef name=\"SendX\"/>" \
+"<VariableRef name=\"OfY\"/>" \
+"</CommandMsg>" \
+"</Command>" \
+"" \
+"</Interface>" \
+"" \
+"<Interface name=\"TelemetryHandlerStatusInterface\" id=\"2\">" \
+"" \
+"<Variable name=\"TelemetryHandlerStatus\" kind=\"Status\" format=\"UINT08\">" \
+"<Drange name=\"TelemetryHandlerStatusEnum\">" \
+"<Option value=\"0\" name=\"NOT_INITIALIZED\"/><!-- The TelemetryHandler has not been successfully initialized -->" \
+"<Option value=\"1\" name=\"INITIALIZING\"/>" \
+"<Option value=\"2\" name=\"RUNNING\"/><!-- The TelemetryHandler is initialized and is running -->" \
+"<Option value=\"3\" name=\"TERMINATING\"/><!-- The TelemetryHandler is shutting down -->" \
+"</Drange>" \
+"</Variable>" \
+"" \
+"<Variable name=\"SystemTelemetryLevel\" kind=\"tbd\" rangeMin=\"0\" rangeMax=\"4\" format=\"UINT08\"/>" \
+"<Variable name=\"DataMsgsReceived\"     kind=\"tbd\"                           format=\"UINT32\"/>" \
+"<Variable name=\"DataMsgsForwarded\"    kind=\"tbd\"                           format=\"UINT32\"/>" \
+"<Variable name=\"ComponentsRegistered\" kind=\"tbd\"                           format=\"UINT16\"/>" \
+"<Variable name=\"DataMsgsRegistered\"   kind=\"tbd\"                           format=\"UINT16\"/>" \
+"<Variable name=\"DataMsgsSubscribed\"   kind=\"tbd\"                           format=\"UINT16\"/>" \
+"<Variable name=\"CommandsReceived\"     kind=\"tbd\"                           format=\"UINT32\"/>" \
+"<Variable name=\"CommandsAccepted\"     kind=\"tbd\"                           format=\"UINT32\"/>" \
+"<Variable name=\"CommandsRejected\"     kind=\"tbd\"                           format=\"UINT32\"/>" \
+"" \
+"<Notification>" \
+"<DataMsg name=\"TelemetryHandlerStatusMsg\" id=\"001\" msgArrival=\"EVENT\">" \
+"<Qualifier value=\"1\" name=\"telemetryLevel\"/>" \
+"<VariableRef name=\"TelemetryHandlerStatus\"/>" \
+"<VariableRef name=\"ComponentsRegistered\"/>" \
+"<VariableRef name=\"DataMsgsReceived\"/>" \
+"<VariableRef name=\"DataMsgsForwarded\"/>" \
+"<VariableRef name=\"DataMsgsRegistered\"/>" \
+"<VariableRef name=\"DataMsgsSubscribed\"/>" \
+"<VariableRef name=\"CommandsReceived\"/>" \
+"<VariableRef name=\"CommandsAccepted\"/>" \
+"<VariableRef name=\"CommandsRejected\"/>" \
+"<VariableRef name=\"SystemTelemetryLevel\"/>" \
+"</DataMsg>" \
+"</Notification>" \
+"" \
+"</Interface>" \
+"" \
+"<Interface name=\"ICSDebugInterface\" id=\"3\">" \
+"" \
+"<!--" \
+"Note: DebugLevel is a bit field with the following assigned values:" \
+"DEBUG_ENTRY_AND_EXIT   = 0x01," \
+"DEBUG_ENTRY_PARAMETERS = 0x02," \
+"DEBUG_EXIT_PARAMETERS  = 0x04," \
+"DEBUG_LEVEL_LOW        = 0x08," \
+"DEBUG_LEVEL_MEDIUM     = 0x10," \
+"DEBUG_LEVEL_HIGH       = 0x20." \
+"The values are OR'd to determine the debug information to be logged." \
+"-->" \
+"" \
+"<Variable name=\"DebugLevel\" kind=\"tbd\" format=\"UINT16\"/>" \
+"<Variable name=\"CurrentDebugLevel\" kind=\"tbd\" format=\"UINT16\"/>" \
+"" \
+"<Variable name=\"SetDebugLevelReceived\" kind=\"tbd\" format=\"UINT16\"/>" \
+"<Variable name=\"SetDebugLevelAccepted\" kind=\"tbd\" format=\"UINT16\"/>" \
+"<Variable name=\"SetDebugLevelSuccess\" kind=\"tbd\" format=\"UINT16\"/>" \
+"<Variable name=\"SetDebugLevelFailure\" kind=\"tbd\" format=\"UINT16\"/>" \
+"" \
+"<Command>" \
+"<CommandMsg name=\"SetDebugLevel\" id=\"001\" description=\"Set the debug log verbosity level\">" \
+"<VariableRef name=\"DebugLevel\"/>" \
+"</CommandMsg>" \
+"</Command>" \
+"" \
+"<Command>" \
+"<CommandMsg name=\"SendDebugStatus\" id=\"002\"/>" \
+"</Command>" \
+"" \
+"<Notification>" \
+"<DataMsg name=\"DebugStatus\" id=\"03\" msgArrival=\"EVENT\">" \
+"<Qualifier value=\"1\" name=\"telemetryLevel\"/>" \
+"<VariableRef name=\"CurrentDebugLevel\"/>" \
+"<VariableRef name=\"SetDebugLevelReceived\"/>" \
+"<VariableRef name=\"SetDebugLevelAccepted\"/>" \
+"<VariableRef name=\"SetDebugLevelSuccess\"/>" \
+"<VariableRef name=\"SetDebugLevelFailure\"/>" \
+"</DataMsg>" \
+"</Notification>" \
+"" \
+"</Interface>" \
+"" \
+"<Interface name=\"TaskControlInterface\" id=\"4\">" \
+"" \
+"<Command>" \
+"<CommandMsg name=\"DestroyTask\" id=\"001\"/>" \
+"</Command>" \
+"" \
+"<!-- Other possible commands include Suspend, Resume, SetPriority, and SetHeartBeatPeriod -->" \
+"<!-- Other possible requests include GetPriority, and GetHeartBeatCount -->" \
+"" \
+"</Interface>" \
+"" \
+"" \
+"</xTEDS>" \
+""
+
+#endif

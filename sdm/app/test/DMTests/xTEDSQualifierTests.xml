@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xTEDS xmlns="http://www.interfacecontrol.com/SPA/xTEDS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.interfacecontrol.com/SPA/xTEDS ../Schema/xTEDS02.xsd" name="Robust_Hub_xTEDS" version="12">
+
+  <Device name="xTEDSQualifierTests" kind="xTEDSQualifierTests" modelId="0001" serialNumber="12345" powerRequirements="5"  >
+    <!--<Qualifier name="Manufacturer" value=""/>
+    <Qualifier name="Model" value="Gen1"/>-->
+  </Device>
+  
+
+  <Interface id="1" name="RH_HCB" description="High Power Circuit Breaker">
+    <Qualifier name ="Num_HCB" value ="4"/>
+    <Qualifier name="HCB_TripCurrent" value="30.0" units="Amps"/>
+    <Variable kind="Time" name="Time" format="UINT32" units="Seconds" />
+    <Variable kind="SubSeconds" name="SubS" units="Counts" format="UINT32" scaleFactor=".00000002083" scaleUnits="Seconds" />
+    <Variable kind ="Index" name ="HCB_ID" format ="UINT08" />
+    <Variable kind ="boolean" name ="Cmd_State" format="UINT08" />
+    <Variable name="HCB_Current" kind="Current" length ="4" format="FLOAT32" scaleUnits="Amps"/>
+    <Variable name="HCB_State" kind="boolean" length ="4" format="UINT08">
+      <Drange name="HCB_StateEnum">
+        <Option name="Off" value="0"/>
+        <Option name="On" value="1"/>
+        <Option name="Tripped" value="2"/>
+      </Drange>
+    </Variable>
+    <Notification>
+      <DataMsg id="1" name="Test1" msgArrival="PERIODIC" msgRate="1" >
+        <Qualifier name="telemetryLevel1" value="1"/>
+        <VariableRef name="Time" />
+        <VariableRef name="SubS" />
+        <VariableRef name="HCB_Current"/>
+        <VariableRef name ="HCB_State"/>
+      </DataMsg>
+    </Notification>
+    <Notification>
+      <DataMsg id="2" name="Test2" msgArrival="EVENT">
+        <Qualifier name="telemetryLevel2" value="2"/>
+        <VariableRef name="Time" />
+        <VariableRef name="SubS" />
+        <VariableRef name="HCB_State"/>
+      </DataMsg>
+    </Notification>
+    <Command>
+      <CommandMsg id="3" name="Test3">
+	<Qualifier name="telemetryLevel3" value="3"/>
+        <VariableRef name ="HCB_ID" />
+        <VariableRef name ="Cmd_State"/>
+      </CommandMsg>
+    </Command>
+  </Interface>
+  
+  <Interface id="2" name="EndpointInterface" description="Endpoint power distribution">
+    <Qualifier name ="Num_Endpoint" value ="8"/> 
+    <Qualifier name="EndpointTripCurrent" value="4.5" units="Amps"/>
+    <Variable kind="Time" name="Time" format="UINT32" units="Seconds" />
+    <Variable kind="SubSeconds" name="SubS" units="Counts" format="UINT32" scaleFactor=".00000002083" scaleUnits="Seconds" />
+    <Variable name="EndpointVoltage" kind="Voltage" format="FLOAT32" scaleUnits="Volts" length ="8" />
+    <Variable name="EndpointCurrent" kind="Current" format="FLOAT32" scaleUnits="Amps" length ="8" />
+    <Variable name="EndpointID" kind="Index" format ="UINT08" />
+    <Variable name ="SetCurrent" kind="boolean" format ="UINT08"/>
+    <Variable name="SoftCurrentLimit" kind="TripCurrent" format="FLOAT32" defaultValue="1.0" scaleUnits="Amps" />
+    <Variable name="EndpointPowerState" kind="boolean" format="UINT08" length ="8">
+      <Drange name="PowerStateEnum">
+        <Option name="Off" value="0"/>
+        <Option name="On" value="1"/>
+        <Option name="Tripped" value="2"/>
+      </Drange>
+    </Variable>
+    <Notification>
+      <DataMsg id="1" name="Test4" msgArrival="PERIODIC" msgRate="1" >
+        <Qualifier name="telemetryLevel" value="1"/>
+        <VariableRef name="Time" />
+        <VariableRef name="SubS" />
+        <VariableRef name="EndpointPowerState" />
+        <VariableRef name="EndpointVoltage"/>
+        <VariableRef name="EndpointCurrent"/>
+      </DataMsg>
+    </Notification>
+    <Notification>
+      <DataMsg id="2" name="Test5" msgArrival="EVENT">
+        <Qualifier name="telemetryLevel" value="1"/>
+        <VariableRef name="Time" />
+        <VariableRef name="SubS" />
+        <VariableRef name="EndpointPowerState"/>
+      </DataMsg>
+    </Notification>
+    <Command>
+      <CommandMsg id="3" name="Test6" >
+	<Qualifier name="TestQual" value="val"/>
+	<Qualifier name="TestQual2" value="val2"/>
+        <VariableRef name ="EndpointID" />
+        <VariableRef name="SoftCurrentLimit"/>
+      </CommandMsg>
+      <FaultMsg name="TestFault" description="This tests fault messages." id="34" />
+    </Command>
+    <Command>
+      <CommandMsg id="4" name="Test7" >
+	<Qualifier name="TestQual" value="val"/>
+	<Qualifier name="TestQual2" value="val2"/>
+	<Qualifier name="TestQual3" value="val3"/>
+	<Qualifier name="TestQual4" value="val4"/>
+        <VariableRef name ="EndpointID" />
+        <VariableRef name="SetCurrent"/>
+      </CommandMsg>
+    </Command>  
+  </Interface>
+
+  <Interface name="DeviceSafety" id="4">
+    <Variable name="TempRH" kind="temperature" format="INT16" units="degC" description="RH Electronics" rLow="-10" yLow="0" yHigh="40" rHigh="50">
+      <Location x="50" y="0" z="0" units="cm"/>
+    </Variable>
+    <Variable name="TempRE" kind="temperature" format="INT16" units="degC" description="Router Electronics" rLow="-10" yLow="0" yHigh="40" rHigh="50">
+      <Location x="50" y="0" z="0" units="cm"/>
+    </Variable>
+    <Variable kind="Time" name="Time" format="UINT32" units="Seconds" />
+    <Variable kind="SubSeconds" name="SubS" units="Counts" format="UINT32" scaleFactor=".00000002083" scaleUnits="Seconds" />
+    <Request>
+      <CommandMsg name="Test8" id="1">
+	<Qualifier name="TestQual" value="val"/>
+	<Qualifier name="TestQual2" value="val2"/>
+      </CommandMsg>
+      <DataReplyMsg name="Test9" id="2">
+	<Qualifier name="TestQual" value="val"/>
+	<Qualifier name="TestQual2" value="val2"/>
+        <VariableRef name="Time" />
+        <VariableRef name="SubS" />
+        <VariableRef name="TempRH"/>
+        <VariableRef name ="TempRE"/>
+      </DataReplyMsg>
+      <FaultMsg name="ReqFault" id="22" description="testing request fault">
+	      <Qualifier name="FaultQual" value="45"> </Qualifier>
+	      <VariableRef name="SubS"/>
+      </FaultMsg>
+    </Request>
+    <Notification>
+      <DataMsg name="Test10" id="3" msgArrival="PERIODIC" msgRate="1">
+        <Qualifier name="telemetryLevel" value="1"/>
+        <VariableRef name="Time" />
+        <VariableRef name="SubS" />
+        <VariableRef name="TempRH"/>
+        <VariableRef name ="TempRE"/>
+      </DataMsg>
+    </Notification>
+  </Interface>
+
+</xTEDS>

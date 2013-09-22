@@ -1,0 +1,4 @@
+ifndef MAKEFILE_DEFS
+MAKEFILE_DEFS=Makefile.defs
+export MAKEFILE_DEFS
+endif

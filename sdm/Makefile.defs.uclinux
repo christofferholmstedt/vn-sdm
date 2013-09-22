@@ -1,0 +1,28 @@
+# -*- Makefile -*-
+## Section for uclinux ############################################################################
+FLTFLAGS += -s 4194304
+
+## The lexer to invoke and flags to pass to it
+LEX=flex
+LEXFLAGS=-B
+
+## The parser generator to invoke and flags to pass to it
+YACC=bison
+YACCFLAGS=-vkdt
+
+CFLAGS +=-DSEND_IMA
+CXXFLAGS+=-DSEND_IMA
+
+## Include the boost libraries, these 2 lines can be commented out to remove the use of the boost libraries
+##BOOST=-DBOOST
+##BOOSTFLAGS=-lboost_regex
+
+## Build to log all SDM message traffic, uncomment the below variable to log SDM messages
+##MESSAGELOGGING=-DBUILD_WITH_MESSAGE_LOGGING
+
+# Uncomment and add the below variable to the build definitions to remove debug statements
+#DEBUGREMOVALFLAGS=-DREMOVE_DEBUG_OUTPUT
+
+# Uncomment to allow backup Data Managers for increased fault tolerance
+#DMBACKUPFLAGS=-DPNP_BACKUP
+

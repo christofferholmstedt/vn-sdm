@@ -1,0 +1,7 @@
+#ifndef _SDM_XTEDS_SUBSCRIPTION_H_
+#define _SDM_XTEDS_SUBSCRIPTION_H_
+
+
+
+
+#endif

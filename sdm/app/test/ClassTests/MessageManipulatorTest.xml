@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xTEDS version="11.16" name="Robo_Hub_xTEDS" xmlns="http://www.interfacecontrol.com/SPA/xTEDS">
+    <Device modelId="0001" kind="Robust_Hub" name="MessageManipulatorTest"/>
+    <Interface id="1" name="TestInterface1">
+        <Variable format="UINT08" kind="test" name="VarUChar"/>
+	<Variable format="INT08" kind="test" name="VarChar"/>
+	<Variable format="UINT16" kind="test" name="VarUShort"/>
+	<Variable format="INT16" kind="test" name="VarShort"/>
+	<Variable format="UINT32" kind="test" name="VarUInt"/>
+	<Variable format="INT32" kind="test" name="VarInt"/>
+	<Variable format="FLOAT32" kind="test" name="VarFloat"/>
+	<Variable format="FLOAT64" kind="test" name="VarDouble"/>
+        <Variable format="UINT08" kind="test" name="VarArray" length="64"/>
+
+        <Notification>
+            <DataMsg msgRate="1" msgArrival="PERIODIC" id="1" name="NotDatMsgTest">
+                <VariableRef name="VarUChar"/>
+		<VariableRef name="VarChar"/>
+		<VariableRef name="VarUShort"/>
+		<VariableRef name="VarShort"/>
+		<VariableRef name="VarUInt"/>
+		<VariableRef name="VarInt"/>
+		<VariableRef name="VarFloat"/>
+		<VariableRef name="VarDouble"/>
+		<VariableRef name="VarArray"/>
+            </DataMsg>
+	    <FaultMsg id="23" name="NotFaultMsgTest">
+		<VariableRef name="VarDouble"/>
+		<VariableRef name="VarFloat"/>
+		<VariableRef name="VarInt"/>
+		<VariableRef name="VarUInt"/>
+		<VariableRef name="VarShort"/>
+		<VariableRef name="VarUShort"/>
+		<VariableRef name="VarChar"/>
+		<VariableRef name="VarUChar"/>
+		<VariableRef name="VarArray"/>
+	    </FaultMsg>
+        </Notification>
+        <Command>
+            <CommandMsg id="2" name="CmdCmdMsgTest">
+                <VariableRef name="VarUChar"/>
+		<VariableRef name="VarChar"/>
+		<VariableRef name="VarUShort"/>
+		<VariableRef name="VarShort"/>
+		<VariableRef name="VarUInt"/>
+		<VariableRef name="VarInt"/>
+		<VariableRef name="VarFloat"/>
+		<VariableRef name="VarDouble"/>
+		<VariableRef name="VarArray"/>
+            </CommandMsg>
+	    <FaultMsg id="5" name="CmdFaultMsgTest">
+		<VariableRef name="VarDouble"/>
+		<VariableRef name="VarFloat"/>
+		<VariableRef name="VarInt"/>
+		<VariableRef name="VarUInt"/>
+		<VariableRef name="VarShort"/>
+		<VariableRef name="VarUShort"/>
+		<VariableRef name="VarChar"/>
+		<VariableRef name="VarUChar"/>
+		<VariableRef name="VarArray"/>
+	     </FaultMsg>
+        </Command>
+        <Request>
+            <CommandMsg id="3" name="ReqCmdMsgTest">
+                <VariableRef name="VarUChar"/>
+		<VariableRef name="VarChar"/>
+		<VariableRef name="VarUShort"/>
+		<VariableRef name="VarShort"/>
+		<VariableRef name="VarUInt"/>
+		<VariableRef name="VarInt"/>
+		<VariableRef name="VarFloat"/>
+		<VariableRef name="VarDouble"/>
+		<VariableRef name="VarArray"/>
+            </CommandMsg>
+	    <DataReplyMsg id="4" name="ReqDataRplyMsgTest">
+		<VariableRef name="VarUChar"/>
+		<VariableRef name="VarChar"/>
+		<VariableRef name="VarUShort"/>
+		<VariableRef name="VarShort"/>
+		<VariableRef name="VarUInt"/>
+		<VariableRef name="VarInt"/>
+		<VariableRef name="VarFloat"/>
+		<VariableRef name="VarDouble"/>
+		<VariableRef name="VarArray"/>
+	    </DataReplyMsg>
+	    <FaultMsg id="5" name="ReqFaultMsgTest">
+		<VariableRef name="VarDouble"/>
+		<VariableRef name="VarFloat"/>
+		<VariableRef name="VarInt"/>
+		<VariableRef name="VarUInt"/>
+		<VariableRef name="VarShort"/>
+		<VariableRef name="VarUShort"/>
+		<VariableRef name="VarChar"/>
+		<VariableRef name="VarUChar"/>
+		<VariableRef name="VarArray"/>
+	     </FaultMsg>
+        </Request>
+    </Interface>
+    <Interface id="2" name="TestInterface2">
+        <Variable format="UINT08" kind="test" name="VarUChar" invalidValue="13"/>
+	<Variable format="INT08" kind="test" name="VarChar" invalidValue="13"/>
+	<Variable format="UINT16" kind="test" name="VarUShort" invalidValue="13"/>
+	<Variable format="INT16" kind="test" name="VarShort" invalidValue="13"/>
+	<Variable format="UINT32" kind="test" name="VarUInt" invalidValue="13"/>
+	<Variable format="INT32" kind="test" name="VarInt" invalidValue="13"/>
+	<Variable format="FLOAT32" kind="test" name="VarFloat" invalidValue="13"/>
+	<Variable format="FLOAT64" kind="test" name="VarDouble" invalidValue="13.0"/>
+        <Variable format="UINT08" kind="test" name="VarArray" length="64"/>
+
+        <Notification>
+            <DataMsg msgRate="1" msgArrival="PERIODIC" id="1" name="NotDatMsgTestInvalid">
+                <VariableRef name="VarUChar"/>
+		<VariableRef name="VarChar"/>
+		<VariableRef name="VarUShort"/>
+		<VariableRef name="VarShort"/>
+		<VariableRef name="VarUInt"/>
+		<VariableRef name="VarInt"/>
+		<VariableRef name="VarFloat"/>
+		<VariableRef name="VarDouble"/>
+		<VariableRef name="VarArray"/>
+            </DataMsg>
+	    <FaultMsg id="23" name="NotFaultMsgTest">
+		<VariableRef name="VarDouble"/>
+		<VariableRef name="VarFloat"/>
+		<VariableRef name="VarInt"/>
+		<VariableRef name="VarUInt"/>
+		<VariableRef name="VarShort"/>
+		<VariableRef name="VarUShort"/>
+		<VariableRef name="VarChar"/>
+		<VariableRef name="VarUChar"/>
+		<VariableRef name="VarArray"/>
+	    </FaultMsg>
+        </Notification>
+        <Command>
+            <CommandMsg id="2" name="CmdCmdMsgTestInvalid">
+                <VariableRef name="VarUChar"/>
+		<VariableRef name="VarChar"/>
+		<VariableRef name="VarUShort"/>
+		<VariableRef name="VarShort"/>
+		<VariableRef name="VarUInt"/>
+		<VariableRef name="VarInt"/>
+		<VariableRef name="VarFloat"/>
+		<VariableRef name="VarDouble"/>
+		<VariableRef name="VarArray"/>
+            </CommandMsg>
+	    <FaultMsg id="5" name="CmdFaultMsgTestInvalid">
+		<VariableRef name="VarDouble"/>
+		<VariableRef name="VarFloat"/>
+		<VariableRef name="VarInt"/>
+		<VariableRef name="VarUInt"/>
+		<VariableRef name="VarShort"/>
+		<VariableRef name="VarUShort"/>
+		<VariableRef name="VarChar"/>
+		<VariableRef name="VarUChar"/>
+		<VariableRef name="VarArray"/>
+	</FaultMsg>
+        </Command>
+        <Request>
+            <CommandMsg id="3" name="ReqCmdMsgTestInvalid">
+                <VariableRef name="VarUChar"/>
+		<VariableRef name="VarChar"/>
+		<VariableRef name="VarUShort"/>
+		<VariableRef name="VarShort"/>
+		<VariableRef name="VarUInt"/>
+		<VariableRef name="VarInt"/>
+		<VariableRef name="VarFloat"/>
+		<VariableRef name="VarDouble"/>
+		<VariableRef name="VarArray"/>
+            </CommandMsg>
+	    <DataReplyMsg id="4" name="ReqDataRplyMsgTestInvalid">
+		<VariableRef name="VarUChar"/>
+		<VariableRef name="VarChar"/>
+		<VariableRef name="VarUShort"/>
+		<VariableRef name="VarShort"/>
+		<VariableRef name="VarUInt"/>
+		<VariableRef name="VarInt"/>
+		<VariableRef name="VarFloat"/>
+		<VariableRef name="VarDouble"/>
+		<VariableRef name="VarArray"/>
+	    </DataReplyMsg>
+	    <FaultMsg id="5" name="ReqFaultMsgTestInvalid">
+		<VariableRef name="VarDouble"/>
+		<VariableRef name="VarFloat"/>
+		<VariableRef name="VarInt"/>
+		<VariableRef name="VarUInt"/>
+		<VariableRef name="VarShort"/>
+		<VariableRef name="VarUShort"/>
+		<VariableRef name="VarChar"/>
+		<VariableRef name="VarUChar"/>
+		<VariableRef name="VarArray"/>
+	     </FaultMsg>
+        </Request>
+    </Interface>
+</xTEDS>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xTEDS xmlns="http://www.interfacecontrol.com/SPA/xTEDS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.interfacecontrol.com/SPA/xTEDS ../Schema/xTEDS02.xsd" name="DNet_CoarseSSAssy_xTEDS"
+       version="2.1">
+
+  <Device name="xTEDSVariableTests" kind="cssa" description="An assembly of 4 coarse sun sensors" />
+
+  <Interface id="1" name="CSSAssemblyInterface" description="Aggregate-level interface for the assembly" >
+	<Orientation axis="X" angle="45" units="degrees"/>
+      	<Orientation axis="Y" angle="45" units="degrees"/>
+     	 <Orientation axis="Z" angle="0" units="degrees"/>
+      <Location x="5" y="5" z="-1" units="cm"/>
+    <Variable kind="Time" name="Test1" invalidValue="123" format="UINT32" units="Seconds" />
+    <Variable kind="SubS" name="Test2" units="Counts" format="UINT32" scaleFactor=".00000002083" scaleUnits="Seconds" />
+    
+    <!--Drange tests-->
+    <Variable name="Test3" kind="boolean" format="UINT08">
+      <Drange name="SolutionEnum" >
+	      <Option name="Yes" value="1"/> 
+      </Drange>
+    </Variable>
+    <Variable name="Test4" kind="boolean" invalidValue="word" format="UINT08">
+      <Drange name="SolutionEnum" >
+	      <Option name="Test1" value="1d"/> 
+	      <Option name="Test2" value="177"/>
+	      <Option name="Test3" value="156"/>
+	      <Option name="Test4" value="12"/>
+	      <Option name="Test5" value="1fe"/>
+      </Drange>
+    </Variable>
+   <Notification>
+	   <DataMsg msgRate="1" msgArrival="PERIODIC" id="1" name="PowerStatus">
+		   <VariableRef name="Test1"/>
+		   <VariableRef name="Test2"/>
+		   <VariableRef name="Test3"/>
+	   </DataMsg>
+   </Notification>
+
+   
+  </Interface>
+</xTEDS>

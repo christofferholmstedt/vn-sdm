@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xTEDS xmlns="http://www.interfacecontrol.com/SPA/xTEDS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:schemaLocation="http://www.interfacecontrol.com/SPA/xTEDS xTEDS02.xsd" name="ActivityManagerXTEDS" description="ActivityManager xTEDS" version="1.0">
+	
+	<Application name="ActivityManager" kind="AutonomyFlightSoftware" description="Autonomous Tasking Executive (ATE), ActivityManager"/>
+	
+	<Interface name="ActivityManagerInterface" id="1">
+		
+		<Variable name="amActivityId" kind="ID" format="UINT32"></Variable>
+		<Variable name="amActivityType" kind="tbd" format="UINT08" length="33"></Variable><!-- 33-byte, null terminated string -->
+		<Variable name="amActivityPriority" kind="tbd" format="UINT16">
+			<Drange name="amActivityPriorityEnum">
+				<Option value="0" name="LOW"/>
+				<Option value="1" name="MEDIUM"/>
+				<Option value="2" name="HIGH"/>
+			</Drange>
+		</Variable>
+		<Variable name="amActivityBeginTime" kind="Time" format="FLOAT64" units="s"></Variable><!-- 0.0 signifies as soon as possible -->
+		<Variable name="amActivityDuration" kind="Time" format="FLOAT64" units="s"></Variable>
+		<Variable name="amActivityNotBeforeTime" kind="Time" format="FLOAT64" units="s"></Variable><!-- 0.0 signifies now -->
+		<Variable name="amActivityNotAfterTime" kind="Time" format="FLOAT64" units="s"></Variable><!-- 0.0 signifies no limit -->
+		<Variable name="amAllowConcurrentActivity" kind="boolean" format="UINT08">
+			<Drange name="amAllowConcurrentActivityEnum">
+				<Option value="0" name="NO"/>
+				<Option value="1" name="YES"/>
+			</Drange>
+		</Variable>
+		<Variable name="amScheduledActivityId" kind="ID" format="UINT32"></Variable>
+		<Variable name="amStatus" kind="Status" format="INT16">
+			<Drange name="amStatusEnum">
+				<Option value="0" name="FAILURE"/>
+				<Option value="1" name="SUCCESS"/>
+			</Drange>
+		</Variable>
+		<Variable name="amExecStatus" kind="Status" format="INT16">
+			<Drange name="amExecStatusEnum">
+				<Option value="0" name="FAILURE"/>
+				<Option value="1" name="SUCCESS"/>
+				<Option value="2" name="NOT_EXECUTED"/>
+			</Drange>
+		</Variable>
+		<Variable name="amDebugLevel" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amCurrentDebugLevel" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amActivitiesCurrentlyScheduled" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amActivitiesExecuted" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amActivitiesExecutedSuccess" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amActivitiesExecutedFailed" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amActivitiesDeleted" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amSchedActivityReceived" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amSchedActivityAccepted" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amSchedActivitySuccess" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amSchedActivityFailure" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amAdjustActivityTimeReceived" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amAdjustActivityTimeAccepted" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amAdjustActivityTimeSuccess" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amAdjustActivityTimeFailure" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amExecuteActivityReceived" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amExecuteActivityAccepted" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amExecuteActivitySuccess" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amExecuteActivityFailure" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amUpdateActivityExecStatusRcvd" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amUpdateActivityExecStatusActd" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amUpdateActivityExecStatusSucc" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amUpdateActivityExecStatusFail" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amDeleteActivityReceived" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amDeleteActivityAccepted" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amDeleteActivitySuccess" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amDeleteActivityFailure" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amDeleteAllActivitiesReceived" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amDeleteAllActivitiesAccepted" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amDeleteAllActivitiesSuccess" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amDeleteAllActivitiesFailure" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amPrepSchedFileReceived" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amPrepSchedFileAccepted" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amPrepSchedFileSuccess" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amPrepSchedFileFailure" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amSetDebugLevelReceived" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amSetDebugLevelAccepted" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amSetDebugLevelSuccess" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amSetDebugLevelFailure" kind="tbd" format="UINT16"></Variable>
+		
+		<!-- Variables for resources required are tbd -->
+		
+		<Request>
+			<CommandMsg name="amSchedActivity" id="001" description="Schedule a mission or housekeeping activity">
+				<VariableRef name="amActivityId"/>
+				<VariableRef name="amActivityType"/>
+				<VariableRef name="amActivityPriority"/>
+				<VariableRef name="amActivityBeginTime"/>
+				<VariableRef name="amActivityDuration"/>
+				<VariableRef name="amAllowConcurrentActivity"/>
+				<VariableRef name="amActivityNotBeforeTime"/>
+				<VariableRef name="amActivityNotAfterTime"/>
+				
+				<!-- VariableRefs for resources are tbd -->
+				
+			</CommandMsg>
+			<DataReplyMsg name="amSchedActivityReply" id="002">
+				<VariableRef name="amScheduledActivityId"/>
+				<VariableRef name="amStatus"/>
+			</DataReplyMsg>
+		</Request>
+		
+		<Request>
+			<CommandMsg name="amAdjustActivityTime" id="003" description="Adjust the scheduled time of a mission or housekeeping activity">
+				<VariableRef name="amActivityId"/>
+				<VariableRef name="amActivityBeginTime"/>
+				<VariableRef name="amActivityDuration"/>
+			</CommandMsg>
+			<DataReplyMsg name="amAdjustActivityTimeReply" id="004">
+				<VariableRef name="amActivityId"/>
+				<VariableRef name="amStatus"/>
+			</DataReplyMsg>
+		</Request>
+		
+		<Command>
+			<CommandMsg name="amExecuteActivity" id="005" description="Execute a scheduled mission or housekeeping activity">
+				<VariableRef name="amActivityId"/>
+			</CommandMsg>
+		</Command>
+		
+		<Command>
+			<CommandMsg name="amUpdateActivityExecStatus" id="006" description="Update activity execution statistics">
+				<VariableRef name="amActivityId"/>
+				<VariableRef name="amExecStatus"/>
+			</CommandMsg>
+		</Command>
+		
+		<Command>
+			<CommandMsg name="amDeleteActivity" id="007" description="Delete a scheduled activity">
+				<VariableRef name="amActivityId"/>
+			</CommandMsg>
+		</Command>
+		
+		<Command>
+			<CommandMsg name="amDeleteAllActivities" id="008" description="Delete all scheduled activities"></CommandMsg>
+		</Command>
+		
+		<Command>
+			<CommandMsg name="amPrepSchedFile" id="009" description="Prepare an activities schedule for downlink"></CommandMsg>
+		</Command>
+		
+		<Command>
+			<CommandMsg name="amSetDebugLevel" id="010" description="Set the debug log verbosity level">
+				<VariableRef name="amDebugLevel"/>
+			</CommandMsg>
+		</Command>
+		
+		<Request>
+			<CommandMsg name="amGetSoh" id="011"></CommandMsg>
+			<DataReplyMsg name="amGetSohReply" id="012">
+				<VariableRef name="amActivitiesCurrentlyScheduled"/>
+				<VariableRef name="amActivitiesExecuted"/>
+				<VariableRef name="amActivitiesExecutedSuccess"/>
+				<VariableRef name="amActivitiesExecutedFailed"/>
+				<VariableRef name="amActivitiesDeleted"/>
+				<VariableRef name="amSchedActivityReceived"/>
+				<VariableRef name="amSchedActivityAccepted"/>
+				<VariableRef name="amSchedActivitySuccess"/>
+				<VariableRef name="amSchedActivityFailure"/>
+				<VariableRef name="amAdjustActivityTimeReceived"/>
+				<VariableRef name="amAdjustActivityTimeSuccess"/>
+				<VariableRef name="amAdjustActivityTimeFailure"/>
+				<VariableRef name="amExecuteActivityReceived"/>
+				<VariableRef name="amExecuteActivityAccepted"/>
+				<VariableRef name="amExecuteActivitySuccess"/>
+				<VariableRef name="amExecuteActivityFailure"/>
+				<VariableRef name="amUpdateActivityExecStatusRcvd"/>
+				<VariableRef name="amUpdateActivityExecStatusActd"/>
+				<VariableRef name="amUpdateActivityExecStatusSucc"/>
+				<VariableRef name="amUpdateActivityExecStatusFail"/>
+				<VariableRef name="amDeleteActivityReceived"/>
+				<VariableRef name="amDeleteActivityAccepted"/>
+				<VariableRef name="amDeleteActivitySuccess"/>
+				<VariableRef name="amDeleteActivityFailure"/>
+				<VariableRef name="amDeleteAllActivitiesReceived"/>
+				<VariableRef name="amDeleteAllActivitiesAccepted"/>
+				<VariableRef name="amDeleteAllActivitiesSuccess"/>
+				<VariableRef name="amDeleteAllActivitiesFailure"/>
+				<VariableRef name="amPrepSchedFileReceived"/>
+				<VariableRef name="amPrepSchedFileAccepted"/>
+				<VariableRef name="amPrepSchedFileSuccess"/>
+				<VariableRef name="amPrepSchedFileFailure"/>
+				<VariableRef name="amSetDebugLevelReceived"/>
+				<VariableRef name="amSetDebugLevelAccepted"/>
+				<VariableRef name="amSetDebugLevelSuccess"/>
+				<VariableRef name="amSetDebugLevelFailure"/>
+				<VariableRef name="amCurrentDebugLevel"/>
+			</DataReplyMsg>
+		</Request>
+		
+		<Notification>
+			<DataMsg name="amSOH" id="013" msgArrival="EVENT">
+				<Qualifier value="1" name="telemetryLevel"></Qualifier>
+				<VariableRef name="amActivitiesCurrentlyScheduled"/>
+				<VariableRef name="amActivitiesExecuted"/>
+				<VariableRef name="amActivitiesExecutedSuccess"/>
+				<VariableRef name="amActivitiesExecutedFailed"/>
+				<VariableRef name="amActivitiesDeleted"/>
+				<VariableRef name="amSchedActivityReceived"/>
+				<VariableRef name="amSchedActivityAccepted"/>
+				<VariableRef name="amSchedActivitySuccess"/>
+				<VariableRef name="amSchedActivityFailure"/>
+				<VariableRef name="amAdjustActivityTimeReceived"/>
+				<VariableRef name="amAdjustActivityTimeSuccess"/>
+				<VariableRef name="amAdjustActivityTimeFailure"/>
+				<VariableRef name="amExecuteActivityReceived"/>
+				<VariableRef name="amExecuteActivityAccepted"/>
+				<VariableRef name="amExecuteActivitySuccess"/>
+				<VariableRef name="amExecuteActivityFailure"/>
+				<VariableRef name="amUpdateActivityExecStatusRcvd"/>
+				<VariableRef name="amUpdateActivityExecStatusActd"/>
+				<VariableRef name="amUpdateActivityExecStatusSucc"/>
+				<VariableRef name="amUpdateActivityExecStatusFail"/>
+				<VariableRef name="amDeleteActivityReceived"/>
+				<VariableRef name="amDeleteActivityAccepted"/>
+				<VariableRef name="amDeleteActivitySuccess"/>
+				<VariableRef name="amDeleteActivityFailure"/>
+				<VariableRef name="amDeleteAllActivitiesReceived"/>
+				<VariableRef name="amDeleteAllActivitiesAccepted"/>
+				<VariableRef name="amDeleteAllActivitiesSuccess"/>
+				<VariableRef name="amDeleteAllActivitiesFailure"/>
+				<VariableRef name="amPrepSchedFileReceived"/>
+				<VariableRef name="amPrepSchedFileAccepted"/>
+				<VariableRef name="amPrepSchedFileSuccess"/>
+				<VariableRef name="amPrepSchedFileFailure"/>
+				<VariableRef name="amSetDebugLevelReceived"/>
+				<VariableRef name="amSetDebugLevelAccepted"/>
+				<VariableRef name="amSetDebugLevelSuccess"/>
+				<VariableRef name="amSetDebugLevelFailure"/>
+				<VariableRef name="amCurrentDebugLevel"/>
+			</DataMsg>
+		</Notification>
+		
+	</Interface>
+	<!-- Panel interface, encapsulating "panel-level" power housekeeping -->
+	<Interface id="8" name="PanelPowerInterface" description="Panel Power Interface">
+		<Qualifier name="NumberOfPorts" value="4"/>
+		<Qualifier name="BreakerTripCurrent" value="30.0" units="Amps"/>
+		<Variable name="PortReference" kind="PowerPortNumber" format="UINT08"/>
+		<Variable kind="Time" name="Time" format="UINT32" units="Seconds"/>
+		<Variable kind="SubSeconds" name="SubS" units="Counts" format="UINT32" scaleFactor=".0001" scaleUnits="Seconds"/>
+		<Variable name="PanelVoltage" kind="Voltage" format="INT16" scaleFactor="0.1" scaleUnits="Volts"/>
+		<Variable name="BreakerCurrentArray" length="4" kind="Current" format="INT16" scaleFactor="1.0" scaleUnits="Amps">
+			<Qualifier name="Panel" value="Array_4"/>
+		</Variable>
+		<Variable name="PortPowerStateArray" length="4" kind="enumeration" format="UINT08">
+			<Drange name="PowerStateEnum">
+				<Option name="Open" value="0"/>
+				<Option name="Closed" value="1"/>
+			</Drange>
+		</Variable>
+		
+		<!-- Message definitions -->	
+		<Notification>
+			<DataMsg id="1" name="PowerStatus" msgArrival="PERIODIC" msgRate="1" >
+				<Qualifier name="telemetryLevel" value="1"/>
+				<VariableRef name="Time"/>
+				<VariableRef name="SubS"/>
+				<VariableRef name="PanelVoltage"/>
+				<VariableRef name="BreakerCurrentArray"/>
+				<VariableRef name="PortPowerStateArray"/>
+			</DataMsg>
+		</Notification>
+		
+		<!-- Commands and services -->
+		<Command>
+			<CommandMsg id="2" name="PortPowerOn" >
+				<VariableRef name="PortReference"/>
+			</CommandMsg>
+		</Command>
+		
+		<Command>
+			<CommandMsg id="3" name="PortPowerOff" >
+				<VariableRef name="PortReference"/>
+			</CommandMsg>
+		</Command>
+		
+	</Interface>
+	
+	
+	<Interface id="9" name="RoboHubInterface" description="Interface for a robust hub">
+		<!-- Properties of the hub and variables in "hub" scope, not "port" scope -->
+		<Qualifier name="NumberOfPorts" value="8"/>
+		<Qualifier name="PortTripCurrent" value="4.5" units="Amps"/>
+		<Variable name="PortReference" kind="HubPortNumber" format="UINT08" description="Refers to a port for events and commands"/>
+		<Variable name="PortEnumeration" kind="HubEnumerationStatus" format="UINT08" description="Used to indicate hub enumeration state"/>
+		<Variable name="PPS_Status" kind="PpsStatus" format="UINT08" description="Used to indicate PPS status"/>
+		<Variable name="SetTripCurrentVal" kind="TripCurrent" format="INT16" scaleFactor="0.1" defaultValue="10" scaleUnits="Amps"/>
+		<Variable name="PortPowerState" kind="PortPowerState" format="UINT08">
+			<Drange name="PowerStateEnum">
+				<Option name="Open" value="0"/>
+				<Option name="Closed" value="1"/>
+				<Option name="HardTrip" value="2"/>
+				<Option name="SoftTrip" value="3"/>
+			</Drange>
+		</Variable>
+		<Variable kind="Time" name="Time" format="UINT32" units="Seconds" />
+		<Variable kind="SubSeconds" name="SubS" units="Counts" format="UINT32" scaleFactor=".0001" scaleUnits="Seconds" />
+		
+		<!-- Variables in "port" scope, declared for each port as arrays of length N_Ports -->
+		<Variable name="PortVoltageArray" length="8" kind="Voltage" format="INT16" scaleFactor="0.1" scaleUnits="Volts">
+			<Qualifier name="HubPort" value="Array_8"/>
+		</Variable>
+		<Variable name="PortCurrentArray" length="8" kind="Current" format="INT16" scaleFactor="0.1" scaleUnits="Amps">
+			<Qualifier name="HubPort" value="Array_8"/>
+		</Variable>
+		<Variable name="SoftCurrentLimitArray" length="8" kind="TripCurrent" format="INT16" scaleFactor="0.1" defaultValue="10" scaleUnits="Amps">
+			<Qualifier name="HubPort" value="Array_8"/>
+		</Variable>
+		<Variable name="PortPowerStateArray" length="8" kind="boolean" format="UINT08">
+			<Qualifier name="HubPort" value="Array_8"/>
+			<Drange name="PowerStateEnumArray">
+				<Option name="Open" value="0"/>
+				<Option name="Closed" value="1"/>
+				<Option name="HardTrip" value="2"/>
+				<Option name="SoftTrip" value="3"/>
+			</Drange>
+		</Variable>
+		
+		<!-- Message Definitions -->		
+		<Notification>
+			<DataMsg id="1" name="PortStatus" msgArrival="PERIODIC" msgRate="1">
+				<Qualifier name="telemetryLevel" value="1"/>
+				<VariableRef name="Time"/>
+				<VariableRef name="SubS"/>
+				<VariableRef name="PortPowerStateArray"/>
+				<VariableRef name="PortVoltageArray"/>
+				<VariableRef name="PortCurrentArray"/>
+			</DataMsg>
+		</Notification>
+		
+		<Notification>
+			<DataMsg id="2" name="PortTripped" msgArrival="EVENT">
+				<Qualifier name="telemetryLevel" value="1"/>
+				<VariableRef name="Time"/>
+				<VariableRef name="SubS"/>
+				<VariableRef name="PortReference"/>
+				<VariableRef name="PortPowerState"/>
+			</DataMsg>
+		</Notification>
+		
+		<!-- Commands and services -->
+		<Command>
+			<CommandMsg id="3" name="ConfigureSoftTrip">
+				<VariableRef name="PortReference"/>
+				<VariableRef name="SetTripCurrentVal"/>
+			</CommandMsg>
+		</Command>
+		
+		<Command>
+			<CommandMsg id="4" name="PortPowerOn" >
+				<VariableRef name="PortReference"/>
+			</CommandMsg>
+		</Command>
+		<Command>
+			<CommandMsg id="5" name="PortPowerOff" >
+				<VariableRef name="PortReference"/>
+			</CommandMsg>
+		</Command>
+		
+		<Request>
+			<CommandMsg id="6" name="GetHubStatus"/>
+			<DataReplyMsg id="7" name="HubStatusReply">
+				<VariableRef name="Time"/>
+				<VariableRef name="SubS"/>
+				<VariableRef name="PortEnumeration"/>
+				<VariableRef name="PPS_Status"/>
+			</DataReplyMsg>
+		</Request>
+		
+		<Request>
+			<CommandMsg id="8" name="GetSoftTripLimits"/>
+			<DataReplyMsg id="9" name="SoftLimitSettingsReply">
+				<VariableRef name="Time"/>
+				<VariableRef name="SubS"/>
+				<VariableRef name="SoftCurrentLimitArray"/>
+			</DataReplyMsg>
+		</Request>
+		
+	</Interface>
+	
+	
+	<!-- Component Safety Interface, defining and facilitating monitoring of device health and safety -->
+	<Interface name="CmpSafety" id="10">
+		<Qualifier name="TemperatureLoKeepout" value="-20.0" units="degC"/>
+		<Qualifier name="TemperatureLoWarning" value="-10.0" units="degC"/>
+		<Qualifier name="TemperatureHiWarning" value="50.0" units="degC"/>
+		<Qualifier name="TemperatureHiKeepout" value="60.0" units="degC"/>
+		<Variable kind="Time" name="Time" format="UINT32" units="Seconds"/>
+		<Variable kind="SubSeconds" name="SubS" units="Counts" format="UINT32" scaleFactor=".0001" scaleUnits="Seconds"/>
+		<Variable name="DeviceTemperature" kind="temperature" format="INT16" scaleFactor="1.0" scaleUnits="degC"/>
+		<Variable name="PanelTemperatureArray" length="8" kind="temperature" format="INT16" scaleFactor="1.0" scaleUnits="degC">
+			<Qualifier name="PanelTemperatureChannel" value="Array_8"/>
+		</Variable>
+		
+		<Notification>
+			<DataMsg name="DeviceTemp" id="1" msgArrival="PERIODIC" msgRate="1">
+				<Qualifier name="telemetryLevel" value="1"/>
+				<VariableRef name="Time"/>
+				<VariableRef name="SubS"/>
+				<VariableRef name="DeviceTemperature"/>
+				<VariableRef name="PanelTemperatureArray"/>
+			</DataMsg>
+		</Notification>
+		
+	</Interface>
+	<Interface name="ActivityManagerInterface" id="15">
+		
+		<Variable name="amActivityId" kind="ID" format="UINT32"></Variable>
+		<Variable name="amActivityType" kind="tbd" format="UINT08" length="33"></Variable><!-- 33-byte, null terminated string -->
+		<Variable name="amActivityPriority" kind="tbd" format="UINT16">
+			<Drange name="amActivityPriorityEnum">
+				<Option value="0" name="LOW"/>
+				<Option value="1" name="MEDIUM"/>
+				<Option value="2" name="HIGH"/>
+			</Drange>
+		</Variable>
+		<Variable name="amActivityBeginTime" kind="Time" format="FLOAT64" units="s"></Variable><!-- 0.0 signifies as soon as possible -->
+		<Variable name="amActivityDuration" kind="Time" format="FLOAT64" units="s"></Variable>
+		<Variable name="amActivityNotBeforeTime" kind="Time" format="FLOAT64" units="s"></Variable><!-- 0.0 signifies now -->
+		<Variable name="amActivityNotAfterTime" kind="Time" format="FLOAT64" units="s"></Variable><!-- 0.0 signifies no limit -->
+		<Variable name="amAllowConcurrentActivity" kind="boolean" format="UINT08">
+			<Drange name="amAllowConcurrentActivityEnum">
+				<Option value="0" name="NO"/>
+				<Option value="1" name="YES"/>
+			</Drange>
+		</Variable>
+		<Variable name="amScheduledActivityId" kind="ID" format="UINT32"></Variable>
+		<Variable name="amStatus" kind="Status" format="INT16">
+			<Drange name="amStatusEnum">
+				<Option value="0" name="FAILURE"/>
+				<Option value="1" name="SUCCESS"/>
+			</Drange>
+		</Variable>
+		<Variable name="amExecStatus" kind="Status" format="INT16">
+			<Drange name="amExecStatusEnum">
+				<Option value="0" name="FAILURE"/>
+				<Option value="1" name="SUCCESS"/>
+				<Option value="2" name="NOT_EXECUTED"/>
+			</Drange>
+		</Variable>
+		<Variable name="amDebugLevel" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amCurrentDebugLevel" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amActivitiesCurrentlyScheduled" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amActivitiesExecuted" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amActivitiesExecutedSuccess" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amActivitiesExecutedFailed" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amActivitiesDeleted" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amSchedActivityReceived" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amSchedActivityAccepted" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amSchedActivitySuccess" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amSchedActivityFailure" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amAdjustActivityTimeReceived" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amAdjustActivityTimeAccepted" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amAdjustActivityTimeSuccess" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amAdjustActivityTimeFailure" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amExecuteActivityReceived" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amExecuteActivityAccepted" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amExecuteActivitySuccess" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amExecuteActivityFailure" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amUpdateActivityExecStatusRcvd" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amUpdateActivityExecStatusActd" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amUpdateActivityExecStatusSucc" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amUpdateActivityExecStatusFail" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amDeleteActivityReceived" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amDeleteActivityAccepted" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amDeleteActivitySuccess" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amDeleteActivityFailure" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amDeleteAllActivitiesReceived" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amDeleteAllActivitiesAccepted" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amDeleteAllActivitiesSuccess" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amDeleteAllActivitiesFailure" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amPrepSchedFileReceived" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amPrepSchedFileAccepted" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amPrepSchedFileSuccess" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amPrepSchedFileFailure" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amSetDebugLevelReceived" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amSetDebugLevelAccepted" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amSetDebugLevelSuccess" kind="tbd" format="UINT16"></Variable>
+		<Variable name="amSetDebugLevelFailure" kind="tbd" format="UINT16"></Variable>
+		
+		<!-- Variables for resources required are tbd -->
+		
+		<Request>
+			<CommandMsg name="amSchedActivity" id="001" description="Schedule a mission or housekeeping activity">
+				<VariableRef name="amActivityId"/>
+				<VariableRef name="amActivityType"/>
+				<VariableRef name="amActivityPriority"/>
+				<VariableRef name="amActivityBeginTime"/>
+				<VariableRef name="amActivityDuration"/>
+				<VariableRef name="amAllowConcurrentActivity"/>
+				<VariableRef name="amActivityNotBeforeTime"/>
+				<VariableRef name="amActivityNotAfterTime"/>
+				
+				<!-- VariableRefs for resources are tbd -->
+				
+			</CommandMsg>
+			<DataReplyMsg name="amSchedActivityReply" id="002">
+				<VariableRef name="amScheduledActivityId"/>
+				<VariableRef name="amStatus"/>
+			</DataReplyMsg>
+		</Request>
+		
+		<Request>
+			<CommandMsg name="amAdjustActivityTime" id="003" description="Adjust the scheduled time of a mission or housekeeping activity">
+				<VariableRef name="amActivityId"/>
+				<VariableRef name="amActivityBeginTime"/>
+				<VariableRef name="amActivityDuration"/>
+			</CommandMsg>
+			<DataReplyMsg name="amAdjustActivityTimeReply" id="004">
+				<VariableRef name="amActivityId"/>
+				<VariableRef name="amStatus"/>
+			</DataReplyMsg>
+		</Request>
+		
+		<Command>
+			<CommandMsg name="amExecuteActivity" id="005" description="Execute a scheduled mission or housekeeping activity">
+				<VariableRef name="amActivityId"/>
+			</CommandMsg>
+		</Command>
+		
+		<Command>
+			<CommandMsg name="amUpdateActivityExecStatus" id="006" description="Update activity execution statistics">
+				<VariableRef name="amActivityId"/>
+				<VariableRef name="amExecStatus"/>
+			</CommandMsg>
+		</Command>
+		
+		<Command>
+			<CommandMsg name="amDeleteActivity" id="007" description="Delete a scheduled activity">
+				<VariableRef name="amActivityId"/>
+			</CommandMsg>
+		</Command>
+		
+		<Command>
+			<CommandMsg name="amDeleteAllActivities" id="008" description="Delete all scheduled activities"></CommandMsg>
+		</Command>
+		
+		<Command>
+			<CommandMsg name="amPrepSchedFile" id="009" description="Prepare an activities schedule for downlink"></CommandMsg>
+		</Command>
+		
+		<Command>
+			<CommandMsg name="amSetDebugLevel" id="010" description="Set the debug log verbosity level">
+				<VariableRef name="amDebugLevel"/>
+			</CommandMsg>
+		</Command>
+		
+		<Request>
+			<CommandMsg name="amGetSoh" id="011"></CommandMsg>
+			<DataReplyMsg name="amGetSohReply" id="012">
+				<VariableRef name="amActivitiesCurrentlyScheduled"/>
+				<VariableRef name="amActivitiesExecuted"/>
+				<VariableRef name="amActivitiesExecutedSuccess"/>
+				<VariableRef name="amActivitiesExecutedFailed"/>
+				<VariableRef name="amActivitiesDeleted"/>
+				<VariableRef name="amSchedActivityReceived"/>
+				<VariableRef name="amSchedActivityAccepted"/>
+				<VariableRef name="amSchedActivitySuccess"/>
+				<VariableRef name="amSchedActivityFailure"/>
+				<VariableRef name="amAdjustActivityTimeReceived"/>
+				<VariableRef name="amAdjustActivityTimeSuccess"/>
+				<VariableRef name="amAdjustActivityTimeFailure"/>
+				<VariableRef name="amExecuteActivityReceived"/>
+				<VariableRef name="amExecuteActivityAccepted"/>
+				<VariableRef name="amExecuteActivitySuccess"/>
+				<VariableRef name="amExecuteActivityFailure"/>
+				<VariableRef name="amUpdateActivityExecStatusRcvd"/>
+				<VariableRef name="amUpdateActivityExecStatusActd"/>
+				<VariableRef name="amUpdateActivityExecStatusSucc"/>
+				<VariableRef name="amUpdateActivityExecStatusFail"/>
+				<VariableRef name="amDeleteActivityReceived"/>
+				<VariableRef name="amDeleteActivityAccepted"/>
+				<VariableRef name="amDeleteActivitySuccess"/>
+				<VariableRef name="amDeleteActivityFailure"/>
+				<VariableRef name="amDeleteAllActivitiesReceived"/>
+				<VariableRef name="amDeleteAllActivitiesAccepted"/>
+				<VariableRef name="amDeleteAllActivitiesSuccess"/>
+				<VariableRef name="amDeleteAllActivitiesFailure"/>
+				<VariableRef name="amPrepSchedFileReceived"/>
+				<VariableRef name="amPrepSchedFileAccepted"/>
+				<VariableRef name="amPrepSchedFileSuccess"/>
+				<VariableRef name="amPrepSchedFileFailure"/>
+				<VariableRef name="amSetDebugLevelReceived"/>
+				<VariableRef name="amSetDebugLevelAccepted"/>
+				<VariableRef name="amSetDebugLevelSuccess"/>
+				<VariableRef name="amSetDebugLevelFailure"/>
+				<VariableRef name="amCurrentDebugLevel"/>
+			</DataReplyMsg>
+		</Request>
+		
+		<Notification>
+			<DataMsg name="amSOH" id="013" msgArrival="EVENT">
+				<Qualifier value="1" name="telemetryLevel"></Qualifier>
+				<VariableRef name="amActivitiesCurrentlyScheduled"/>
+				<VariableRef name="amActivitiesExecuted"/>
+				<VariableRef name="amActivitiesExecutedSuccess"/>
+				<VariableRef name="amActivitiesExecutedFailed"/>
+				<VariableRef name="amActivitiesDeleted"/>
+				<VariableRef name="amSchedActivityReceived"/>
+				<VariableRef name="amSchedActivityAccepted"/>
+				<VariableRef name="amSchedActivitySuccess"/>
+				<VariableRef name="amSchedActivityFailure"/>
+				<VariableRef name="amAdjustActivityTimeReceived"/>
+				<VariableRef name="amAdjustActivityTimeSuccess"/>
+				<VariableRef name="amAdjustActivityTimeFailure"/>
+				<VariableRef name="amExecuteActivityReceived"/>
+				<VariableRef name="amExecuteActivityAccepted"/>
+				<VariableRef name="amExecuteActivitySuccess"/>
+				<VariableRef name="amExecuteActivityFailure"/>
+				<VariableRef name="amUpdateActivityExecStatusRcvd"/>
+				<VariableRef name="amUpdateActivityExecStatusActd"/>
+				<VariableRef name="amUpdateActivityExecStatusSucc"/>
+				<VariableRef name="amUpdateActivityExecStatusFail"/>
+				<VariableRef name="amDeleteActivityReceived"/>
+				<VariableRef name="amDeleteActivityAccepted"/>
+				<VariableRef name="amDeleteActivitySuccess"/>
+				<VariableRef name="amDeleteActivityFailure"/>
+				<VariableRef name="amDeleteAllActivitiesReceived"/>
+				<VariableRef name="amDeleteAllActivitiesAccepted"/>
+				<VariableRef name="amDeleteAllActivitiesSuccess"/>
+				<VariableRef name="amDeleteAllActivitiesFailure"/>
+				<VariableRef name="amPrepSchedFileReceived"/>
+				<VariableRef name="amPrepSchedFileAccepted"/>
+				<VariableRef name="amPrepSchedFileSuccess"/>
+				<VariableRef name="amPrepSchedFileFailure"/>
+				<VariableRef name="amSetDebugLevelReceived"/>
+				<VariableRef name="amSetDebugLevelAccepted"/>
+				<VariableRef name="amSetDebugLevelSuccess"/>
+				<VariableRef name="amSetDebugLevelFailure"/>
+				<VariableRef name="amCurrentDebugLevel"/>
+			</DataMsg>
+		</Notification>
+		
+  </Interface>
+	
+</xTEDS>
+

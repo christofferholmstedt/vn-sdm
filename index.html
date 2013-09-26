@@ -18,7 +18,7 @@
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/virtual-network/vn-sdm">View on GitHub</a>
 
-          <h1 id="project_title">GitHub: Vn-sdm Project</h1>
+          <h1 id="project_title">VN-sdm (C++) Project</h1>
           <h2 id="project_tagline">Virtual Network Protocol - System Data Manager derivative</h2>
 
             <section id="downloads">
@@ -32,18 +32,80 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h3>
-<a name="welcome-to-virtual-network-pages" class="anchor" href="#welcome-to-virtual-network-pages"><span class="octicon octicon-link"></span></a>Welcome to Virtual Network Pages.</h3>
+<a name="welcome-to-virtual-network-pages" class="anchor" href="#welcome-to-virtual-network-pages"><span class="octicon octicon-link"></span></a>Welcome to Virtual Network Protocol Project</h3>
      <h4>Introduction</h4>
 	 <p>The Virtual Network Protocol Development is based on the US government funded Space Plug-and-Play 
 	 Avionics development which has been released to the public in 2012 as open source.</p>
 	<p>
 	The intention of this open source development is to explore further how Virtual Networks can be established
 	efficiently for various systems using a self-describing, self-organizing software standard with possiblity
-	of reusing Applications much similar as Android/IOS phone and tabel apps.
+	of reusing Applications much similar as Android/IOS phone and tabel apps.<BR>The VN-sdm is a part of the Virtual Network Protocol effort.
 	</p>
 	<ul>
 	 <li><a href="source_intro.html">Software release information</a>
 	</ul>
+	<h4>Annoncement</h4>
+
+<p>Inspired by the Space Plug-and-Play Architecture (SPA) standard, <a hef="http://www.mdh.se">Malardalen
+University</a> and <a href="http://www.adv.bruhnspace.com">Bruhnspace Advanced Projects AB (BAP)</a> has initiated an
+effort to evolve the software protocol part of the US developed SPA infrastructure
+to better adopt to all kinds of unmanned systems, including CubeSatellites
+and Internet-of-Things (IoT) devices.</p>
+<p>
+This effort is named Virtual Network Protocol (VNP) and is backwards
+compatible with SDM v1.10.3a from which the work is forked. VNP is released
+as open source and open community development at GitHub. Anyone can
+and may join the community driven development as well as visit Malardalen
+University's demonstrator laboratory for underwater vehicles and satellite
+research and education.</p>
+
+<p>VNP Project page: <a href="http://virtual-network.github.io/vn-sdm/">http://virtual-network.github.io/vn-sdm/</a><BR>
+VNP Software page: <a href="https://github.com/virtual-network">https://github.com/virtual-network</a></p>
+
+<p>VNP is compatible with the software description found in draft SPA standard
+from 2011 while removing the compliance with Test-bypass, microD, nanoD connectors,
+5 V, 28 V, 50 x 50 mm2 bracket mounting holes, etc.</p>
+<p>The compliance includes the following parts, excluding references to parts removed
+as defined below:</p>
+<ul>
+<li>UUID, RFC 4122 Standard
+<li>SPA Local Subnet Standard
+<li>SPA Logical Interface Standard
+<li>SPA Networking Standard
+<li>SPA Ontology Standard
+<li>SPA System Capabilities Standard
+<li>SPA SpaceWire Subnet Adaptation
+<li>Draft SPA-1 standard
+</ul>
+<p>
+VNP will introduce the following additions in the near term:</p>
+<ul>
+<li>Improved error handling
+<li>Bug fixes
+<li>VNP Controller Area Network, VN-CAN interface
+<li>VNP I2C Network, VN-I2C interface (updated SPA-1/Mini PnP) 
+</ul>
+<p>
+VNP has removed compliance with: </p>
+<ul>
+<li>SPA Physical Interface Standard
+<li>SPA System Capabilities standard
+<li>SPA Test Bypass
+</ul>
+<p>VNP will be used by the students and researchers at Malardalen University
+Master's and Doctoral programs in Robotics for different projects starting fall
+2013.</p>
+<p>
+Development of a Hard real-time and verifiable software VN core implementation called
+VN-sdm-ADA is being discussed. VN-sdm-ADA would be written in ADA language, utilize sockets,
+and be verified using UPPAAL. <a href="http://www.uppaal.org">http://www.uppaal.org</a>
+<BR>Information regarding this will be posted on the community portal.
+</p>
+<p>Please spread to your colleagues and others that may have an interest.</p>
+
+<p>For further information, please contact,
+<BR>
+Professor Lars Asplund, <a href="mailto:lars.asplund@mdh.se">lars.asplund@mdh.se</a></p>
 	  </section>
     </div>
 
@@ -55,8 +117,5 @@
         <BR>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-
-    
-
   </body>
 </html>
